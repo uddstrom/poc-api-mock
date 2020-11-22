@@ -4,35 +4,64 @@ import React, { useEffect, useState } from 'react';
 
 import logo from './logo.svg';
 
+// https://api.weatherbit.io/v2.0/current?city=Stockholm,SE&key=9c425d40a19240ecb7588645a68b9cd3
+// https://api.weatherbit.io/v2.0/forecast/daily?city=Stockholm,SE&key=9c425d40a19240ecb7588645a68b9cd3
+
 function App() {
     const [city, setCity] = useState('');
-    const [weather, setWeater] = useState('');
+    const [current, setCurrent] = useState('');
+    const [forecast, setForecast] = useState('');
+    const API_BASE_URL =
+        process.env.REACT_APP_API === 'FAKE'
+            ? 'http://localhost:9090'
+            : 'https://api.weatherbit.io';
 
     useEffect(() => {
-        const getWeather = async () => {
+        const getCurrentWeather = async () => {
             const response = await fetch(
-                `https://api.weatherbit.io/v2.0/current?city=${city}&key=9c425d40a19240ecb7588645a68b9cd3`,
+                `${API_BASE_URL}/v2.0/current?city=${city}&key=9c425d40a19240ecb7588645a68b9cd3`,
             );
-            const weather = await response.json();
-            console.log('weather received', weather.data[0]);
-            setWeater(weather.data[0].weather);
+            const current = await response.json();
+            setCurrent(current.data[0].weather);
         };
+
+        const getForecast = async () => {
+            const response = await fetch(
+                `${API_BASE_URL}/v2.0/forecast/daily?city=${city}&key=9c425d40a19240ecb7588645a68b9cd3`,
+            );
+            const forecast = await response.json();
+            setForecast(forecast.data[0].weather);
+        };
+
         if (city) {
-            console.log('Getting weather for ', city);
-            getWeather();
+            getCurrentWeather();
+            getForecast();
         }
-    }, [city]);
+    }, [city, API_BASE_URL]);
 
     const handleCityChange = (e) => {
         setCity(e.target.value);
     };
 
-    const getIcon = () => {
-        if (city && weather?.icon) {
-            const iconUrl = `https://www.weatherbit.io/static/img/icons/${weather.icon}.png`;
-            return <img src={iconUrl} className='App-logo' alt='logo' />;
+    const renderWeather = () => {
+        if (city && current && forecast) {
+            return (
+                <>
+                    <h3>Current</h3>
+                    <p>{current.description}</p>
+                    {getIcon(current.icon)}
+                    <h3>Forecast</h3>
+                    <p>{forecast.description}</p>
+                    {getIcon(forecast.icon)}
+                </>
+            );
         }
         return <img src={logo} className='App-logo' alt='logo' />;
+    };
+
+    const getIcon = (icon) => {
+        const iconUrl = `https://www.weatherbit.io/static/img/icons/${icon}.png`;
+        return <img src={iconUrl} className='App-logo' alt='logo' />;
     };
 
     return (
@@ -46,8 +75,7 @@ function App() {
                 </select>
                 <br />
                 <br />
-                {city && weather && <p>{weather.description}</p>}
-                {getIcon()}
+                {renderWeather()}
             </header>
         </div>
     );

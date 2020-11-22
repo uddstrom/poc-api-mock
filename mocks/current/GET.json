@@ -1,0 +1,43 @@
+{
+    "data": [
+        {
+            "rh": 70,
+            "pod": "n",
+            "lon": 18.0649,
+            "pres": 994.7,
+            "timezone": "Europe/Stockholm",
+            "ob_time": "2020-11-22 14:50",
+            "country_code": "SE",
+            "clouds": 53,
+            "ts": 1606056600,
+            "solar_rad": 0,
+            "state_code": "26",
+            "city_name": "Stockholm",
+            "wind_spd": 6.7,
+            "wind_cdir_full": "west-southwest",
+            "wind_cdir": "WSW",
+            "slp": 996,
+            "vis": 5,
+            "h_angle": -90,
+            "sunset": "14:07",
+            "dni": 0,
+            "dewpt": 2.9,
+            "snow": 0,
+            "uv": 0,
+            "precip": 0,
+            "wind_dir": 240,
+            "sunrise": "07:01",
+            "ghi": 0,
+            "dhi": 0,
+            "aqi": 27,
+            "lat": 59.33258,
+            "weather": { "icon": "c01d", "code": 800, "description": "Clear sky (mock)" },
+            "datetime": "2020-11-22:15",
+            "temp": 8,
+            "station": "ESSB",
+            "elev_angle": -6.19,
+            "app_temp": 8
+        }
+    ],
+    "count": 1
+}
