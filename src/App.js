@@ -11,10 +11,7 @@ function App() {
     const [city, setCity] = useState('');
     const [current, setCurrent] = useState('');
     const [forecast, setForecast] = useState('');
-    const API_BASE_URL =
-        process.env.REACT_APP_API === 'FAKE'
-            ? 'http://localhost:9090'
-            : 'https://api.weatherbit.io';
+    const API_BASE_URL = '';
 
     useEffect(() => {
         const getCurrentWeather = async () => {
